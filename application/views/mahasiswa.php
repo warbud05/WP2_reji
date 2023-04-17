@@ -5,6 +5,7 @@
 </head>
 
 <body>
+    <a href="<?= base_url('index.php/mahasiswa/insert'); ?>">Tambah data</a>
     <legend>Data Mahasiswa</legend>
     <table width="40%" border="1">
         <thead>
@@ -15,6 +16,8 @@
                 <td>Jurusan</td>
                 <td>Alamat</td>
                 <td>Action</td>
+                <td>edit</td>
+                
             </tr>
         </thead>
         <?php $no = 0;
@@ -38,6 +41,9 @@
                 </td>
                 <td>
                     <a href="<?= base_url('index.php/mahasiswa/hapus/' . $row->nim); ?>">hapus</a>
+                </td>
+                <td>
+                    <a href="<?= base_url('index.php/mahasiswa/edit/' . $row->nim); ?>">edit</a>
                 </td>
             </tr>
         <?php endforeach; ?>
