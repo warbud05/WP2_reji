@@ -1,34 +1,45 @@
 <?php
-class m_mahasiswa extends CI_Model
-{
-    private $table = "mahasiswa";
-    private $primary = "nim";
-    function tampilData()
-    {
-        if (empty($order_column) || empty($order_type))
-            $this->db->order_by($this->primary, 'asc');
-        else
-            $this->db->order_by();
-        return $this->db->get($this->table);
-        //SELECT * FROM mahasiswa ORDER BY nim asc
-    }
-    function hapus($nim)
-    {
-        $this->db->where($this->primary, $nim);
-        $this->db->delete($this->table);
-        //DELETE FROM mahasiswa WHERE nim = $nim;
-    }
-    function input_data($data, $table)
-    {
-        $this->db->insert($table, $data);
-    }
-
-    function edit_data($where, $table)
-    {
-        return $this->db->get_where($table, $where);
-    }
-    function update_data($where,$data,$table){
-		$this->db->where($where);
-		$this->db->update($table,$data);
-	}	
+class m_mahasiswa extends CI_Model{
+ private $table="mahasiswa";
+ private $primary="nim";
+ 
+ function tampilData(){
+ if(empty($order_column) || empty($order_type))
+ $this->db->order_by($this->primary,'asc');
+ else
+ $this->db->order_by();
+ return $this->db->get($this->table);
+ }
+ 
+ function jumlah(){
+ return $this->db->count_all($this->table);
+ }
+ 
+ function cek($kode){
+ $this->db->where($this->primary,$kode);
+ $query=$this->db->get($this->table);
+ 
+ return $query;
+ }
+ 
+ function simpan($coba){
+ $this->db->insert($this->table,$coba);
+ return $this->db->insert_id();
+ }
+ 
+ function update($kode,$jenis){
+ $this->db->where($this->primary,$kode);
+ $this->db->update($this->table,$jenis);
+ }
+ 
+ function hapus($kode){
+ $this->db->where($this->primary,$kode);
+ $this->db->delete($this->table);
+ }
+ 
+ function cari($cari){
+ $this->db->like($this->primary,$cari);
+ $this->db->or_like("nama",$cari);
+ return $this->db->get($this->table);
+ }
 }
